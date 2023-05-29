@@ -1,5 +1,6 @@
 //const mongoose = require('mongoose')
 const { Schema, model } = require("mongoose");
+const Profile = require("./Profile");
 
 //Name , Email, password and Profile
 
@@ -22,7 +23,7 @@ const userSchema = new Schema(
     },
     profile: {
       type: Schema.Types.ObjectId,
-      ref: "Profile",
+      ref: Profile,
     },
   },
   {
