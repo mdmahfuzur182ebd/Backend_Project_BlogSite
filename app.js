@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+//const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -18,17 +19,22 @@ const middleware = [
 ];
 
 app.use(middleware);
+//app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "Hello Programmer",
-  });
+  res.render('pages/auth/signup', {title:'Create A New Account '})
+
+
 });
 
+app.get('/login', (req, res) =>{
+   res.render('pages/auth/login')
+})
 
-const PORT = process.env.PORT || 9000;
+
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`SERVER IS RUNNING ON PORT ${PORT}`);
