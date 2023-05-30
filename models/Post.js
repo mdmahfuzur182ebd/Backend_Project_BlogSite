@@ -28,6 +28,7 @@ const postSchema = new Schema(
     thumbnail: String,
 
     readTime: String,
+    
     likes: [
       {
         type: Schema.Types.ObjectId,
