@@ -24,8 +24,8 @@ app.use(middleware);
 
 
 app.get("/", (req, res) => {
-  //res.render('pages/auth/signup', {title:'Create A New Account '})
-  res.render("pages/index");
+  res.render('pages/auth/signup', {title:'Create A New Account '})
+  //res.render("pages/index");
 });
 
 app.get('/login',(req, res) =>{
