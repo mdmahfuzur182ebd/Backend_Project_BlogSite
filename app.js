@@ -24,10 +24,13 @@ app.use(middleware);
 
 
 app.get("/", (req, res) => {
-  res.render('pages/auth/signup', {title:'Create A New Account '})
-
-
+  //res.render('pages/auth/signup', {title:'Create A New Account '})
+  res.render("pages/index");
 });
+
+app.get('/login',(req, res) =>{
+  
+})
 
 
 const PORT = process.env.PORT || 8080;
