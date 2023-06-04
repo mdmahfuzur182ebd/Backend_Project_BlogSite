@@ -1,5 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
+
+// Import Routes.
+const authRoutes = require("./routes/authRoute");
 
 const app = express();
 
@@ -19,21 +23,27 @@ const middleware = [
 
 app.use(middleware);
 
-
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.render('pages/auth/signup', {title:'Create A New Account '})
-  //res.render("pages/index");
+  res.json({
+    message: "Hello Project.",
+  });
 });
-
-app.get('/login',(req, res) =>{
-  
-})
-
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
-  console.log(`SERVER IS RUNNING ON PORT ${PORT}`);
-});
-
+mongoose
+  .connect(
+    "mongodb+srv://mdmahfuzur7788:12345@cluster0.zlpqkbc.mongodb.net/exp-blog",
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    console.log("Database Connected");
+    app.listen(PORT, () => {
+      console.log(`SERVER IS RUNNING ON PORT ${PORT}`);
+    });
+  })
+  .catch((e) => {
+    return console.log(e);
+  });

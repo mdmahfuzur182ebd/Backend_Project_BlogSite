@@ -1,14 +1,14 @@
 // user id,title, bio, profilePics, links {fb, twi}, posts, bookmark
 
 const { Schema, model } = require("mongoose");
-const Post = require("./Post");
-const User = require("./User");
+// const Post = require("./Post");
+// const User = require("./User");
 
 const ProfileSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: User,
+      ref: 'User',
       required: true,
     },
     name: {
@@ -41,7 +41,7 @@ const ProfileSchema = new Schema(
     bookmarks: [
       {
         type: Schema.Types.ObjectId,
-        ref: Post,
+        ref: 'Post',
       },
     ],
   },
