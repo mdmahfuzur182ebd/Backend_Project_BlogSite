@@ -6,11 +6,11 @@ const Profile = require("./Profile");
 
 const userSchema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       trim: true,
+      maxlength: 15,
       required: true,
-      maxlength: 30,
     },
     email: {
       type: String,
