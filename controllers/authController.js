@@ -65,3 +65,12 @@ exports.loginPostController = async (req, res, next) => {
 };
 
 exports.logoutController = (req, res, next) => {};
+
+
+//what is validation
+// front End validation
+// Backend validation
+// database validation
+
+//most use validation--> validator, joi->@hapi/joi
+// use -- express-validator ---middleware
