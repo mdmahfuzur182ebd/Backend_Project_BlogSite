@@ -19,7 +19,14 @@ router.post(
 
   (req, res, next) => {
     let errors = validationResult(req);
-    console.log(errors);
+
+    const formatter = (error) => error.msg
+
+    // console.log(errors.isEmpty());
+    // console.log(errors.array());
+    // console.log(errors.mapped());
+    console.log(errors.formatWith(formatter).mapped());
+
     res.render("playground/signup", { title: "validator playground" });
   }
 );
