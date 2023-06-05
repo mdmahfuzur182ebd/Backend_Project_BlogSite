@@ -1,4 +1,7 @@
 const router = require("express").Router();
+const { body } = require("express-validator");
+
+const User = require("../models/User");
 
 const {
   signupGetController,
@@ -8,12 +11,46 @@ const {
   logoutController,
 } = require("../controllers/authController");
 
-router.get('/signup', signupGetController)
-router.post('/signup', signupPostController)
+const signupValidator = [
+  body("username")
+    .isLength({ min: 2, max: 15 })
+    .withMessage("Username Must Be Between 2 to 15 Chars")
+    .custom(async (username) => {
+      let user = await User.findOne({ username });
+      if (user) {
+        return Promise.reject("Username Already Used");
+      }
+    })
+    .trim(),
 
-router.get('/login', loginGetController)
-router.post('/login', loginPostController)
+  body("email")
+    .withMessage("Please Provide A Valid Email")
+    .custom(async (email) => {
+      let user = await User.findOne({ email });
+      if (user) {
+        return Promise.reject("Email Already used");
+      }
+    })
+    .normalizeEmail(),
 
-router.get('/logout', logoutController)
+  body("password")
+    .isLength({ min: 5 })
+    .withMessage("Your Password Must Be Greater Than 5 chars"),
+
+  body("confirmPassword")
+  .custom((confirmPassword, { req }) => {
+    if (confirmPassword != req.body.password) {
+      throw new Error("Password Does Not Match");
+    }
+  }),
+];
+
+router.get("/signup", signupGetController);
+router.post("/signup", signupValidator, signupPostController);
+
+router.get("/login", loginGetController);
+router.post("/login", loginPostController);
+
+router.get("/logout", logoutController);
 
 module.exports = router;
