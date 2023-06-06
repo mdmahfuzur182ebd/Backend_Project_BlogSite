@@ -7,6 +7,10 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 // Import Routes.
 const authRoutes = require("./routes/authRoute");
 
+// Import Middleware
+const { bindUserWithRequest } = require("./middleware/authMiddleware");
+
+// Database
 const MONGODB_URI =
   "mongodb+srv://mdmahfuzur7788:12345@cluster0.zlpqkbc.mongodb.net/exp-blog";
 
@@ -34,11 +38,12 @@ const middleware = [
     secret: process.env.SECRET_KEY || "SECRET_KEY", //hashing algo
     resave: false,
     saveUninitialized: false,
-     cookie:{
-        maxAge: 1000 * 60 * 60 * 2  //  2 hour
-     },
-    store: store
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2, //  2 hour
+    },
+    store: store,
   }),
+  //bindUserWithRequest(),
 ];
 
 app.use(middleware);
