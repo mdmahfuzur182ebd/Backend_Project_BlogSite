@@ -2,9 +2,19 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 // Import Routes.
 const authRoutes = require("./routes/authRoute");
+
+const MONGODB_URI =
+  "mongodb+srv://mdmahfuzur7788:12345@cluster0.zlpqkbc.mongodb.net/exp-blog";
+
+// session store
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: "sessions",
+});
 
 const app = express();
 
@@ -21,13 +31,14 @@ const middleware = [
   express.urlencoded({ extended: true }),
   express.json(),
   session({
-     secret: process.env.SECRET_KEY || 'SECRET_KEY', //hashing algo
-     resave: false,
-     saveUninitialized:false,
-    //  cookie:{
-    //    maxAge: 60 * 60 * 2 
-    //  }
-  })
+    secret: process.env.SECRET_KEY || "SECRET_KEY", //hashing algo
+    resave: false,
+    saveUninitialized: false,
+     cookie:{
+        maxAge: 1000 * 60 * 60 * 2  //  2 hour
+     },
+    store: store
+  }),
 ];
 
 app.use(middleware);
@@ -43,10 +54,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8080;
 
 mongoose
-  .connect(
-    "mongodb+srv://mdmahfuzur7788:12345@cluster0.zlpqkbc.mongodb.net/exp-blog",
-    { useNewUrlParser: true }
-  )
+  .connect(MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
     console.log("Database Connected");
     app.listen(PORT, () => {
