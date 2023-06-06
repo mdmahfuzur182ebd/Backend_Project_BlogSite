@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 const { validationResult } = require("express-validator");
-//const User = require('../models/User');
+
 const errorFormatter = require("../utils/validationErrorFormatter");
 
 exports.signupGetController = (req, res, next) => {
