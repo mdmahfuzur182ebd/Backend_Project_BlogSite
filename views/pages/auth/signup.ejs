@@ -18,7 +18,7 @@
                   type="text"
                   name="username"
                   id="username"
-                  class="form-control <%= error.username ?'is-invalid' : ' ' %>"
+                  class="form-control <%= error.username ?'is-invalid' : ' ' %>" value="<%= value.username ? value.username : ''  %>"
                 />
                 <div class="invalid-feedback">
                   <%= error.username && error.username %>
@@ -30,7 +30,7 @@
                 type="email"
                 name="email"
                 id="email"
-                class="form-control <%= error.email ?'is-invalid' : ' ' %>"
+                class="form-control <%= error.email ?'is-invalid' : ' ' %>" value="<%= value.email ? value.email : ''  %>"
               />
               <div class="invalid-feedback">
                 <%= error.email && error.email %>
@@ -42,7 +42,7 @@
                   type="password"
                   name="password"
                   id="password"
-                  class="form-control <%= error.password ?'is-invalid' : ' ' %>"
+                  class="form-control <%= error.password ?'is-invalid' : ' ' %>" value="<%= value.password ? value.password : ''  %>"
                 />
                 <div class="invalid-feedback">
                   <%= error.password && error.password %>
