@@ -53,24 +53,16 @@ exports.signupPostController = async (req, res, next) => {
 };
 
 exports.loginGetController = (req, res, next) => {
-  //console.log(req.get('Cookie'))
-  //let isLoggedIn = req.get("Cookie").includes("isLoggedId = true") ? true : false;
+  console.log(req.session.isLoggedIn, req.session.user);
+
   res.render("pages/auth/login", {
     title: "Login to Your Account",
     error: {},
-    isLoggedIn:false,
   });
 };
 
 exports.loginPostController = async (req, res, next) => {
   let { email, password } = req.body;
-
-  //let isLoggedIn = req.get("Cookie").includes("isLoggedId = true")? true: false;
-  res.render("pages/auth/login", {
-    title: "Login to Your Account",
-    error: {},
-    isLoggedIn:false,
-  });
 
   let errors = validationResult(req).formatWith(errorFormatter);
 
@@ -78,7 +70,6 @@ exports.loginPostController = async (req, res, next) => {
     return res.render("pages/auth/login", {
       title: "Login to Your Account",
       error: errors.mapped(),
-      isLoggedIn
     });
   }
 
@@ -97,13 +88,12 @@ exports.loginPostController = async (req, res, next) => {
       });
     }
 
-    // console.log("Successfully Logged In ", user);
-    res.setHeader("Set-Cookie", "isLoggedIn=true"); //create Cookie
+    req.session.isLoggedIn = true; //create session
+    req.session.user = user;
 
     res.render("pages/auth/login", {
       title: "Login to Your Account",
       error: {},
-      isLoggedIn:false,
     });
   } catch (e) {
     console.log(e);
