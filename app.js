@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoute");
 
 // Import Middleware
 const { bindUserWithRequest } = require("./middleware/authMiddleware");
+const setLocals = require('./middleware/setLocals')
 
 // Database
 const MONGODB_URI =
@@ -43,7 +44,8 @@ const middleware = [
     },
     store: store,
   }),
-  //bindUserWithRequest(),
+  bindUserWithRequest(),
+  setLocals()
 ];
 
 app.use(middleware);
