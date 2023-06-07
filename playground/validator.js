@@ -1,10 +1,17 @@
 const router = require("express").Router();
-const { check, validationResult } = require("express-validator");
+const { 
+  check, 
+  validationResult 
+} = require("express-validator");
+  
+const Flash = require('../utils/Flash')
+
 
 router.get("/validator", (req, res, next) => {
 
-   console.log(req.flash('fail'));
-   console.log(req.flash('success'));
+  //  console.log(req.flash('fail'));
+  //  console.log(req.flash('success'));
+   console.log(Flash.getMessage(req))
 
   res.render("playground/signup", { title: "validator playground" });
 });
