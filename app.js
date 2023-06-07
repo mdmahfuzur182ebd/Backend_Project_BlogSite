@@ -6,14 +6,17 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 
 // Import Routes.
 const authRoutes = require("./routes/authRoute");
+const dashboardRoutes = require("./routes/dashboardRoute");
 
 // Import Middleware
 const { bindUserWithRequest } = require("./middleware/authMiddleware");
-const setLocals = require('./middleware/setLocals')
+const setLocals = require("./middleware/setLocals");
+
 
 // Database
 const MONGODB_URI =
   "mongodb+srv://mdmahfuzur7788:12345@cluster0.zlpqkbc.mongodb.net/exp-blog";
+
 
 // session store
 const store = new MongoDBStore({
@@ -23,10 +26,12 @@ const store = new MongoDBStore({
 
 const app = express();
 
+
 //Setup view Engine
 
 app.set("view engine", "ejs");
 app.set("views", "views");
+
 
 // Middleware Array
 
@@ -45,12 +50,14 @@ const middleware = [
     store: store,
   }),
   bindUserWithRequest(),
-  setLocals()
+  setLocals(),
 ];
 
-app.use(middleware);
 
+app.use(middleware);
 app.use("/auth", authRoutes);
+app.use("/dashboard", dashboardRoutes);
+
 
 app.get("/", (req, res) => {
   res.json({
