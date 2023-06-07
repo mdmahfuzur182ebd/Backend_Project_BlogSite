@@ -14,7 +14,7 @@ const { bindUserWithRequest } = require("./middleware/authMiddleware");
 const setLocals = require("./middleware/setLocals");
 
 //playground Routes  
- const validatorRouter = require('./playground/validator')
+ //const validatorRouter = require('./playground/validator')
 
 // Database
 const MONGODB_URI =
@@ -61,7 +61,7 @@ const middleware = [
 app.use(middleware);
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
-app.use("/playground", validatorRouter);
+//app.use("/playground", validatorRouter);
 
 
 app.get("/", (req, res) => {
