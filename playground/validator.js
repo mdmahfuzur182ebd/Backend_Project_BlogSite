@@ -39,15 +39,18 @@ router.post(
   (req, res, next) => {
     let errors = validationResult(req);
 
-    const formatter = (error) => error.msg;
+    // const formatter = (error) => error.msg;
 
     // console.log(errors.isEmpty());
     // console.log(errors.array());
     // console.log(errors.mapped());
-    console.log(errors.formatWith(formatter).mapped());
-    console.log(req.body.username, req.body.email);
+    // console.log(errors.formatWith(formatter).mapped());
+    // console.log(req.body.username, req.body.email);
 
-    res.render("playground/signup", { title: "validator playground" });
+    // res.render("playground/signup", { title: "validator playground" });
+    if(!errors.isEmpty()){
+      
+    }
   }
 );
 

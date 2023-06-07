@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const flash = require('connect-flash');
 
 // Import Routes.
 const authRoutes = require("./routes/authRoute");
@@ -12,6 +13,8 @@ const dashboardRoutes = require("./routes/dashboardRoute");
 const { bindUserWithRequest } = require("./middleware/authMiddleware");
 const setLocals = require("./middleware/setLocals");
 
+//playground Routes  
+ const validatorRouter = require('./playground/validator')
 
 // Database
 const MONGODB_URI =
@@ -51,12 +54,14 @@ const middleware = [
   }),
   bindUserWithRequest(),
   setLocals(),
+  flash()
 ];
 
 
 app.use(middleware);
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/playground", validatorRouter);
 
 
 app.get("/", (req, res) => {
