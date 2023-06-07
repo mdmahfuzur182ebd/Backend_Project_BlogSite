@@ -90,10 +90,12 @@ exports.loginPostController = async (req, res, next) => {
 
     req.session.isLoggedIn = true; //create session
     req.session.user = user;
-
-    res.render("pages/auth/login", {
-      title: "Login to Your Account",
-      error: {},
+    req.session.save((err) => {
+      if (err) {
+        console.log(err);
+        return next(err);
+      }
+      res.redirect("/dashboard");
     });
   } catch (e) {
     console.log(e);
@@ -101,4 +103,12 @@ exports.loginPostController = async (req, res, next) => {
   }
 };
 
-exports.logoutController = (req, res, next) => {};
+exports.logoutController = (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
+    return res.redirect("/auth/login");
+  });
+};
