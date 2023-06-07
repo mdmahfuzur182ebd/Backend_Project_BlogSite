@@ -25,9 +25,9 @@ exports.signupPostController = async (req, res, next) => {
   } = req.body;
 
   let errors = validationResult(req).formatWith(errorFormatter);
-  req.flash('fail', 'Please Check Your Form' )
 
   if (!errors.isEmpty()) {
+    req.flash("fail", "Please Check Your Form");
     return res.render("pages/auth/signup", {
       title: "Create A New Account",
       error: errors.mapped(),
@@ -78,9 +78,11 @@ exports.loginPostController = async (req, res, next) => {
   } = req.body;
 
   let errors = validationResult(req).formatWith(errorFormatter);
-   req.flash('fail', 'Please Check Your Form')
+   
 
   if (!errors.isEmpty()) {
+    req.flash("fail", "Please Check Your Form");
+
     return res.render("pages/auth/login", {
       title: "Login to Your Account",
       error: errors.mapped(),
@@ -136,7 +138,7 @@ exports.logoutController = (req, res, next) => {
       console.log(err);
       return next(err);
     }
-    req.flash('success', 'Successfully Logged Out')
+   // req.flash('success', 'Successfully Logged Out')
     return res.redirect("/auth/login");
   });
 };
