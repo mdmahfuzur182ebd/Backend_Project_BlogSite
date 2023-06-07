@@ -2,6 +2,10 @@ const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
 router.get("/validator", (req, res, next) => {
+
+   console.log(req.flash('fail'));
+   console.log(req.flash('success'));
+
   res.render("playground/signup", { title: "validator playground" });
 });
 
@@ -49,8 +53,11 @@ router.post(
 
     // res.render("playground/signup", { title: "validator playground" });
     if(!errors.isEmpty()){
-      
+      req.flash('fail', 'There is Some Error')
+    }else{
+      req.flash('success', 'There is No Error')
     }
+    res.redirect('/playground/validator')
   }
 );
 
