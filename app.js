@@ -26,6 +26,8 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: "sessions",
 });
+ 
+//console.log(process.env.NODE_ENV)//undefine
 
 const app = express();
 
