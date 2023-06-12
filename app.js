@@ -1,9 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const flash = require('connect-flash');
+const flash = require("connect-flash");
 
 // Import Routes.
 const authRoutes = require("./routes/authRoute");
@@ -13,34 +14,32 @@ const dashboardRoutes = require("./routes/dashboardRoute");
 const { bindUserWithRequest } = require("./middleware/authMiddleware");
 const setLocals = require("./middleware/setLocals");
 
-//playground Routes  
- //const validatorRouter = require('./playground/validator')
+//playground Routes
+//const validatorRouter = require('./playground/validator')
+
 
 // Database
-const MONGODB_URI =
-  "mongodb+srv://mdmahfuzur7788:12345@cluster0.zlpqkbc.mongodb.net/exp-blog";
-
+const MONGODB_URI = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_PASSWORD}@cluster0.zlpqkbc.mongodb.net/exp-blog`;
 
 // session store
 const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: "sessions",
 });
- 
+
 //console.log(process.env.NODE_ENV)//undefine
 
 const app = express();
 
 console.log(app.get("env"));
-if(app.get('env').toLowerCase == 'development'){
-  app.use(morgan('dev'))
+if (app.get("env").toLowerCase == "development") {
+  app.use(morgan("dev"));
 }
 
 //Setup view Engine
 
 app.set("view engine", "ejs");
 app.set("views", "views");
-
 
 // Middleware Array
 
@@ -60,15 +59,13 @@ const middleware = [
   }),
   bindUserWithRequest(),
   setLocals(),
-  flash()
+  flash(),
 ];
-
 
 app.use(middleware);
 app.use("/auth", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 //app.use("/playground", validatorRouter);
-
 
 app.get("/", (req, res) => {
   res.json({
