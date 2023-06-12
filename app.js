@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const flash = require("connect-flash");
+const config = require('config')
+
 
 // Import Routes.
 const authRoutes = require("./routes/authRoute");
@@ -31,17 +33,10 @@ const store = new MongoDBStore({
 
 const app = express();
 
-const config = require('./config/config')
-if(app.get('env') == 'development'){
-  console.log(config.dev.name)
-}else{
-  console.log(config.prod.name)
-}
-
-console.log(app.get("env"));
-if (app.get("env").toLowerCase === "development") {
-  app.use(morgan("dev"));
-}
+//config
+console.log(config.get('name'))
+console.log(config.get('email'))
+console.log(config.get('contacts.email'))
 
 //Setup view Engine
 
