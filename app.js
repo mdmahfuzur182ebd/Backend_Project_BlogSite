@@ -21,7 +21,9 @@ const setLocals = require("./middleware/setLocals");
 
 
 // Database
-const MONGODB_URI = `mongodb+srv://${process.env.DB_ADMIN}:${process.env.DB_PASSWORD}@cluster0.zlpqkbc.mongodb.net/exp-blog`;
+const MONGODB_URI = `mongodb+srv://${config.get("db-username")}:${config.get(
+  "db-password"
+)}@cluster0.zlpqkbc.mongodb.net/exp-blog`;
 
 // session store
 const store = new MongoDBStore({
@@ -35,8 +37,8 @@ const app = express();
 
 //config
 console.log(config.get('name'))
-console.log(config.get('email'))
-console.log(config.get('contacts.email'))
+// console.log(config.get('email'))
+// console.log(config.get('contact.'))
 
 //Setup view Engine
 
@@ -51,7 +53,7 @@ const middleware = [
   express.urlencoded({ extended: true }),
   express.json(),
   session({
-    secret: process.env.SECRET_KEY || "SECRET_KEY", //hashing algo
+    secret: config.get('secret'),
     resave: false,
     saveUninitialized: false,
     cookie: {
