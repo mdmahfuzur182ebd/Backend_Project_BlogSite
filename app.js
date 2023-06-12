@@ -31,6 +31,10 @@ const store = new MongoDBStore({
 
 const app = express();
 
+console.log(app.get("env"));
+if(app.get('env').toLowerCase == 'development'){
+  app.use(morgan('dev'))
+}
 
 //Setup view Engine
 
