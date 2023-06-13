@@ -7,4 +7,10 @@ const {
 
 route.get("/", isAuthenticated, dashboardGetController);
 
+route.get('/create-profile')
+route.post('/create-profile')
+
+route.get('/edit-profile')
+route.post('/edit-profile')
+
 module.exports = route;
