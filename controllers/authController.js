@@ -52,12 +52,12 @@ exports.signupPostController = async (req, res, next) => {
     });
 
     await user.save(); //user save or store data
-    res.flash('success', 'User Created SuccessFully')
+    req.flash('success', 'User Created SuccessFully')
     res.redirect("/auth/login");
 
   } catch (error) {
     console.log(error);
-    next(e);
+    next(error);
   }
 };
 
